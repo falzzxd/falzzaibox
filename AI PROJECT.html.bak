@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>©𝐅𝐚𝐥𝐳𝐁𝐨𝐱 - 𝐀𝐢</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Open Graph Meta Tags for Link Preview -->
+  <meta property="og:title" content="FalzBox - AI Chat Cerdas" />
+  <meta property="og:description" content="Coba AI canggih dari FalzBox untuk menjawab pertanyaanmu!" />
+  <meta property="og:image" content="https://files.catbox.moe/kcfuq0.jpg" />
+  <meta property="og:url" content="https://contohdomain.com" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Favicon (opsional) -->
+  <link rel="icon" href="https://contohdomain.com/favicon.ico" />
+
+  <!-- Animasi Intro -->
+  <style>
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+    .fade-out {
+      animation: fadeOut 1s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: scale(0.95); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.8s ease-out;
+    }
+  </style>
+</head>
+<body class="bg-blue-50 min-h-screen flex items-center justify-center px-4">
+
+  <!-- ⏱ ANIMASI INTRO -->
+  <div id="introAnimation" class="fixed inset-0 z-50 bg-white flex items-center justify-center">
+    <div class="flex items-center space-x-4 animate-fade-in">
+      <!-- Struktur bundar -->
+      <div class="w-12 h-12 border-4 border-blue-500 rounded-full animate-spin"></div>
+      <!-- Teks -->
+      <h1 class="text-3xl md:text-4xl font-bold text-blue-700 tracking-wide">𝑭𝒂𝒍𝒛𝒛𝑩𝒐𝒙 - 𝑨𝒊</h1>
+    </div>
+  </div>
+
+  <!-- 💬 KONTEN UTAMA -->
+  <div class="w-full max-w-md h-[90vh] bg-white p-4 rounded-2xl shadow-md border border-blue-300 flex flex-col relative">
+
+    <!-- Header -->
+    <div class="mb-3 border-b border-blue-300 pb-2 flex items-center">
+      <div class="flex-1 bg-blue-100 text-blue-600 text-center py-2 rounded-md border border-blue-300 shadow-sm font-semibold">
+        💬 Apa yang Anda pikirkan?
+      </div>
+      <div class="ml-2">
+        <button onclick="toggleMenuDrawer()" class="text-2xl px-2">⋮</button>
+      </div>
+    </div>
+
+    <!-- Chat History -->
+    <div id="chatHistory" class="flex-1 overflow-y-auto space-y-3 px-1 mb-3">
+      <!-- Bubble chat muncul di sini -->
+    </div>
+
+    <!-- Input Area -->
+    <div class="fixed bottom-4 left-0 right-0 px-4 flex justify-center z-50">
+      <div class="w-full max-w-md flex gap-2 bg-white p-2 rounded-xl border border-blue-300 shadow-lg">
+        <button onclick="rekamSuara()" class="bg-blue-100 text-blue-600 px-3 rounded hover:bg-blue-200">🎤</button>
+        <input
+          id="inputPertanyaan"
+          type="text"
+          class="flex-1 border border-blue-400 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
+          placeholder="Tanyakan sesuatu..."
+          onkeydown="if(event.key === 'Enter') jawab()"
+        />
+        <button onclick="jawab()" class="bg-blue-500 text-white px-4 rounded hover:bg-blue-600">𝐤𝐢𝐫𝐢𝐦</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Drawer Menu -->
+  <div id="menuDrawer" class="fixed top-0 right-0 h-full w-10/12 md:w-1/2 bg-white shadow-xl border-l border-blue-200 transform translate-x-full transition-transform duration-300 z-50 flex flex-col">
+    <div class="p-4 border-b border-blue-200 flex justify-between items-center">
+      <h2 class="text-blue-600 font-semibold">Menu</h2>
+      <button onclick="toggleMenuDrawer()" class="text-gray-500 hover:text-red-500 text-xl">&times;</button>
+    </div>
+    <div class="flex-1 flex">
+      <div class="w-1/2 border-r border-blue-100 p-2 space-y-2 text-sm text-blue-700">
+        <button onclick="tampilkanKonten('riwayat')" class="block w-full text-left hover:bg-blue-50 px-2 py-1 rounded">📜 Riwayat</button>
+        <hr />
+        <button onclick="tampilkanKonten('tentang')" class="block w-full text-left hover:bg-blue-50 px-2 py-1 rounded">👨‍💻 Tentang Developer</button>
+        <hr />
+        <button onclick="tampilkanKonten('panduan')" class="block w-full text-left hover:bg-blue-50 px-2 py-1 rounded">📘 Panduan AI</button>
+        <hr />
+        <button onclick="tampilkanKonten('premium')" class="block w-full text-left hover:bg-blue-50 px-2 py-1 rounded">💎 Upgrade ke Premium</button>
+        <hr />
+        <button onclick="tampilkanKonten('rating')" class="block w-full text-left hover:bg-blue-50 px-2 py-1 rounded">⭐ Rating & Ulasan</button>
+        <hr />
+        <button onclick="tampilkanKonten('tema')" class="block w-full text-left hover:bg-blue-50 px-2 py-1 rounded">🎨 Ganti Tema Warna</button>
+      </div>
+      <div class="w-1/2 p-3 text-sm text-gray-800 overflow-y-auto" id="kontenMenu">
+        <!-- Konten menu tampil di sini -->
+        <p class="text-gray-400 italic">Pilih menu di sebelah kiri</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script>
+    // Animasi Intro
+    window.addEventListener("DOMContentLoaded", () => {
+      setTimeout(() => {
+        const intro = document.getElementById("introAnimation");
+        intro.classList.add("fade-out");
+        setTimeout(() => {
+          intro.style.display = "none";
+        }, 1000);
+      }, 3000);
+    });
+
+    const API_KEY = "APIKEY KAMU";
+    const chatContainer = document.getElementById("chatHistory");
+
+    function toggleMenuDrawer() {
+      document.getElementById("menuDrawer").classList.toggle("translate-x-full");
+    }
+
+    function tampilkanKonten(menu) {
+      const konten = document.getElementById("kontenMenu");
+      if (menu === "riwayat") {
+        const riwayat = JSON.parse(localStorage.getItem("riwayatPertanyaan") || "[]");
+        if (riwayat.length === 0) {
+          konten.innerHTML = "<p class='text-gray-500'>Belum ada riwayat.</p>";
+        } else {
+          konten.innerHTML = riwayat.map((r, i) => `<p class="mb-1">${i + 1}. ${r}</p>`).join("");
+        }
+      } else if (menu === "tentang") {
+        konten.innerHTML = `<h3 class="font-bold text-blue-600 mb-2">👨‍💻 Tentang Developer</h3><p>Saya adalah pengembang AI antarmuka ini. Jika Anda punya pertanyaan atau saran, silakan hubungi saya!</p>`;
+      } else if (menu === "panduan") {
+        konten.innerHTML = `<h3 class="font-bold text-blue-600 mb-2">📘 Panduan AI</h3><ul class="list-disc ml-5 space-y-1"><li>Gunakan bahasa yang sopan dan jelas.</li><li>Ketik pertanyaan dengan lengkap.</li><li>Anda bisa pakai 🎤 untuk input suara.</li></ul>`;
+      } else if (menu === "premium") {
+        konten.innerHTML = `<h3 class="font-bold text-blue-600 mb-2">💎 Premium</h3><p>Dapatkan akses ke AI Falzbox dengan fitur premium: akses pertanyaan penuh penuh, API key dari admin, dan kode siap pakai. Hubungi <strong>IG: falz_sstore</strong> /  <strong>Tt: falfabyan</strong>.</p>`;
+      } else if (menu === "rating") {
+        konten.innerHTML = `<h3 class="font-bold text-blue-600 mb-2">⭐ Beri Rating</h3><div class="flex gap-1 text-xl text-gray-400" id="bintang"><span onclick="beriRating(1)">★</span><span onclick="beriRating(2)">★</span><span onclick="beriRating(3)">★</span><span onclick="beriRating(4)">★</span><span onclick="beriRating(5)">★</span></div><p id="nilaiRating" class="mt-2 text-blue-500">Belum ada rating</p>`;
+      } else if (menu === "tema") {
+        konten.innerHTML = `<h3 class="font-bold text-blue-600 mb-2">🎨 Ganti Tema Warna</h3><p>Fitur ini sedang dalam pengembangan.</p>`;
+      }
+    }
+
+    function beriRating(nilai) {
+      const bintang = document.querySelectorAll("#bintang span");
+      bintang.forEach((el, i) => {
+        el.classList.toggle("text-yellow-400", i < nilai);
+        el.classList.toggle("text-gray-400", i >= nilai);
+      });
+      document.getElementById("nilaiRating").textContent = `Anda memberi ${nilai} dari 5 bintang`;
+    }
+
+    function simpanRiwayat(pertanyaan) {
+      const riwayat = JSON.parse(localStorage.getItem("riwayatPertanyaan") || "[]");
+      riwayat.push(pertanyaan);
+      localStorage.setItem("riwayatPertanyaan", JSON.stringify(riwayat));
+    }
+
+    async function jawab() {
+      const input = document.getElementById("inputPertanyaan");
+      const userInput = input.value.trim();
+      if (!userInput) return;
+
+      simpanRiwayat(userInput);
+
+      const bubbleTanya = document.createElement("div");
+      bubbleTanya.className = "text-right";
+      bubbleTanya.innerHTML = `<div class="bg-blue-100 inline-block text-blue-900 p-2 rounded-md">${userInput}</div>`;
+      chatContainer.appendChild(bubbleTanya);
+
+      const bubbleLoading = document.createElement("div");
+      bubbleLoading.className = "text-left";
+      bubbleLoading.innerHTML = `<div class="bg-gray-100 inline-block text-gray-600 p-2 rounded-md animate-pulse">Mengetik...</div>`;
+      chatContainer.appendChild(bubbleLoading);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+      input.value = "";
+
+      try {
+        const response = await fetch("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${API_KEY}`
+          },
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: [
+              { role: "system", content: "Kamu adalah asisten pintar dalam bahasa Indonesia." },
+              { role: "user", content: userInput }
+            ]
+          })
+        });
+
+        const data = await response.json();
+        const aiReply = data.choices?.[0]?.message?.content || "Maaf, terjadi kesalahan.";
+        bubbleLoading.innerHTML = `<div class="bg-gray-100 inline-block text-gray-800 p-2 rounded-md border border-blue-300 whitespace-pre-wrap">${aiReply}</div>`;
+      } catch (err) {
+        bubbleLoading.innerHTML = `<div class="bg-red-100 inline-block text-red-800 p-2 rounded-md">Terjadi kesalahan koneksi.</div>`;
+        console.error(err);
+      }
+
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    function rekamSuara() {
+      if (!('webkitSpeechRecognition' in window)) {
+        alert("Peramban tidak mendukung pengenalan suara.");
+        return;
+      }
+
+      const recognition = new webkitSpeechRecognition();
+      recognition.lang = 'id-ID';
+      recognition.start();
+
+      recognition.onresult = function (event) {
+        const hasil = event.results[0][0].transcript;
+        document.getElementById("inputPertanyaan").value = hasil;
+      };
+
+      recognition.onerror = function (event) {
+        alert("Terjadi kesalahan saat merekam suara.");
+      };
+    }
+  </script>
+</body>
+</html>
